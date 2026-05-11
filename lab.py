@@ -261,8 +261,9 @@ def main() -> None:
         [id2label[i] for i in pred_idx],
         labels=list(id2label.values()),
     )
-    print(pd.DataFrame(cm, index=list(id2label.values()), columns=list(id2label.values())).to_string())
-
+    cm_df = pd.DataFrame(cm, index=list(id2label.values()), columns=list(id2label.values()))
+    print(cm_df.to_string())
+    cm_df.to_csv("confusion_matrix.csv")
     # Push to Hugging Face Hub.
     # Skipped in CI (DATA_PATH set); requires `huggingface-cli login` locally.
     if os.environ.get("DATA_PATH") is None:
