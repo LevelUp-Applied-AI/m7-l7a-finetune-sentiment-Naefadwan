@@ -22,8 +22,18 @@ def manual_predict(model, tokenizer, texts: list, batch_size: int = 8):
     # TODO: forward pass under torch.no_grad()
     # TODO: softmax over the last dim
     # TODO: argmax to get class indices
-    # TODO: collect into numpy arrays of shape (N,) and (N, num_classes); return both
-    raise NotImplementedError
+    # TODO: collect into numpy arrays of shape (N,) and (N, num_classes); return both 
+    preds = []
+    probs = []
+    for text in texts:
+        inputs = tokenizer(text, return_tensors='pt', truncation=True, max_length=128, padding=True)
+        with torch.no_grad():
+            outputs = model(**inputs)
+            probs = torch.softmax(outputs.logits, dim=-1)
+            preds = torch.argmax(probs, dim=-1)
+            preds.append(preds) 
+            probs.append(probs)
+    return np.array(preds), np.array(probs)
 
 
 def compute_classification_report_from_arrays(y_true, y_pred) -> dict:
@@ -45,4 +55,22 @@ def compute_classification_report_from_arrays(y_true, y_pred) -> dict:
     # TODO: accuracy = sum(y_pred == y_true) / N
     # TODO: macro-F1 = mean of per-class f1 scores
     # TODO: assemble and return the dict
-    raise NotImplementedError
+    true_positives = {i: 0 for i in range(len(y_true))}
+    false_positives = {i: 0 for i in range(len(y_true))}
+    false_negatives = {i: 0 for i in range(len(y_true))}
+    for i in range(len(y_true)):
+        if y_true[i] == y_pred[i]:
+            true_positives[y_true[i]] += 1
+        else:
+            false_positives[y_true[i]] += 1
+            false_negatives[y_pred[i]] += 1
+    precision = {i: true_positives[i] / (true_positives[i] + false_positives[i]) for i in range(len(y_true))}
+    recall = {i: true_positives[i] / (true_positives[i] + false_negatives[i]) for i in range(len(y_true))}
+    f1 = {i: 2 * precision[i] * recall[i] / (precision[i] + recall[i]) for i in range(len(y_true))}
+    accuracy = sum(y_pred == y_true) / len(y_true)
+    macro_f1 = sum(f1.values()) / len(f1)
+    return {
+        "accuracy": accuracy,
+        "macro_f1": macro_f1,
+        "per_class": {i: {"precision": precision[i], "recall": recall[i], "f1": f1[i]} for i in range(len(y_true))},
+    }
