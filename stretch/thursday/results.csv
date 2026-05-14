@@ -1,0 +1,31 @@
+id,hypothesis_category,text,expected_label,rationale,predicted_label,predicted_probability,correct
+1,negation,The latest update did not improve battery life at all.,negative,Tests whether the model picks up the negation cue or just the trigger word improve,negative,0.9737780690193176,True
+2,lexical_trigger,This app is no longer reliable on my phone.,negative,Strong positive cue reliable negated by no longer; tests cue-vs-context handling,negative,0.994800329208374,True
+3,domain_shift,The team won the championship final last weekend.,neutral,Sports content unrelated to app-review training; tests domain-shift robustness,negative,0.8280749320983887,False
+4,negation,I cannot say that I enjoyed this experience.,negative,Double negation-like structure where cannot say... enjoyed implies negative sentiment.,neutral,0.7806159257888794,False
+5,negation,This app fails to provide even basic functionality.,negative,Uses fails to as a negation of a positive concept.,negative,0.9868963360786438,True
+6,negation,"It is not the worst app, but it is certainly not the best.",neutral,Balanced negation that should land in neutral.,negative,0.9927625060081482,False
+7,lexical_trigger,The interface is a masterpiece of confusion.,negative,Masterpiece is a strong positive trigger used ironically/metaphorically for a negative state.,neutral,0.927226722240448,False
+8,lexical_trigger,I am happy to delete this from my phone.,negative,"Happy is a positive trigger, but the context of delete makes it negative.",positive,0.9803418517112732,False
+9,lexical_trigger,This is a great example of how not to design a UI.,negative,"Great is positive, but used to describe a failure.",positive,0.9899054169654846,False
+10,domain_shift,Heat the oven to 350 degrees and grease a 9-inch pan.,neutral,Recipe instructions; tests if non-review text is correctly identified as neutral.,negative,0.603564441204071,False
+11,domain_shift,The stock market saw a significant dip in tech shares today.,neutral,Financial news; tests domain robustness.,negative,0.6217179894447327,False
+12,domain_shift,The quick brown fox jumps over the lazy dog.,neutral,Standard filler text; should be neutral.,neutral,0.9420322775840759,True
+13,length_extreme,Bad.,negative,Extreme short text; tests if model can handle minimal context.,negative,0.9953729510307312,True
+14,length_extreme,Love it.,positive,Extreme short text (positive).,negative,0.5912977457046509,False
+15,length_extreme,I have been using this app for three years now through various updates and iterations and I must say that while the initial versions were somewhat buggy the developers have really stepped up their game recently to the point where I can not imagine my daily routine without it even if the subscription price is a bit high for what it offers at the end of the day.,positive,Extreme long text; tests handling of long-range dependencies and verbosity.,neutral,0.9515771269798279,False
+16,length_extreme,Total garbage. Waste of time. Don t download. Broken. Useless. Terrible. Awful. Worst app ever. Zero stars. Disappointed. Frustrated. Annoyed. Angry. Hate it. Delete immediately. Never again. Scams. Avoid. Warning. Warning. Warning.,negative,Staccato long text composed of many negative triggers.,negative,0.9948622584342957,True
+17,sarcasm,"Oh great, another update that breaks everything.",negative,Surface great vs intended frustration.,positive,0.8242909908294678,False
+18,sarcasm,I love how it crashes every time I open a menu.,negative,Surface love vs intended frustration.,positive,0.6933533549308777,False
+19,sarcasm,"Thanks for the data leak, really appreciate it.",negative,Surface thanks/appreciate vs intended anger.,positive,0.8853661417961121,False
+20,sarcasm,"Wow, such a useful feature that I will never use.",negative,Surface useful vs irony.,positive,0.9921074509620667,False
+21,other,The app is 10/10 but the support is 0/10.,neutral,Mixed sentiment with numerical cues; tests if model averages the two.,neutral,0.9792611002922058,True
+22,other,It is okay I guess.,neutral,Vague sentiment; tests the neutral boundary.,neutral,0.9659073948860168,True
+23,other,!!! ??? !!!,neutral,Punctuation only; tests if the model hallucinates sentiment from noise.,negative,0.9939709901809692,False
+24,negation,I would not recommend this to my worst enemy.,negative,Negation of recommend combined with worst enemy.,negative,0.9940615296363831,True
+25,lexical_trigger,A wealth of bugs.,negative,"Wealth is usually positive, but here it describes an abundance of errors.",negative,0.5801407098770142,True
+26,domain_shift,The mitochondria is the powerhouse of the cell.,neutral,Scientific fact; tests domain shift.,neutral,0.812030017375946,True
+27,length_extreme,No.,negative,One word negative.,negative,0.971509575843811,True
+28,sarcasm,"Brilliant, now I have to restart my phone again.",negative,Sarcastic use of Brilliant.,positive,0.9893808364868164,False
+29,other,It does what it says on the tin.,positive,Idiomatic positive expression.,neutral,0.5076791644096375,False
+30,other,Meh.,neutral,Slang for indifference.,negative,0.9697569608688354,False
